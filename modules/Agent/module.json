@@ -1,0 +1,8 @@
+{
+  "id": "agent",
+  "name": "Agent",
+  "version": "1.0.0",
+  "license_required": false,
+  "provider": "Modules\\Agent\\Providers\\AgentServiceProvider",
+  "permissions": []
+}

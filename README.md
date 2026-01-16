@@ -68,6 +68,15 @@ Lokálny licensing cache a middleware pre modulové routy:
 
 Triedy sú v `app/Support/Licensing/LicenseService.php` a `app/Http/Middleware/EnsureModuleActive.php`.
 
+## Control Plane Agent
+
+Kontrakt API je v `docs/control-plane-contract.md`. Agent modul je v `modules/Agent` a používa príkazy:
+- `php artisan agent:register`
+- `php artisan agent:heartbeat`
+- `php artisan agent:license-refresh`
+
+Nastavenie a scheduler sú popísané v `modules/Agent/docs/README.md`.
+
 ## Prompting Standard (Codex)
 
 Všetky implementačné prompty pre Codex udržiavame verzované v repozitári v adresári `/prompts`.
