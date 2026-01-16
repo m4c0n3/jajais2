@@ -68,6 +68,13 @@ Lokálny licensing cache a middleware pre modulové routy:
 
 Triedy sú v `app/Support/Licensing/LicenseService.php` a `app/Http/Middleware/EnsureModuleActive.php`.
 
+## Module Discovery
+
+Moduly ukladaj do `modules/<ModuleName>/module.json`. Discovery spustíš príkazom:
+- `php artisan module:discover`
+
+Manifest minimálne obsahuje `id`, `name`, `version`. Záznam v tabuľke `modules` sa vytvorí s `enabled=false`.
+
 ## Control Plane Agent
 
 Kontrakt API je v `docs/control-plane-contract.md`. Agent modul je v `modules/Agent` a používa príkazy:
