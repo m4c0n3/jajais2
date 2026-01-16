@@ -3,5 +3,8 @@
   "name": "HelloWorld",
   "version": "1.0.0",
   "license_required": false,
-  "provider": "Modules\\HelloWorld\\Providers\\HelloWorldServiceProvider"
+  "provider": "Modules\\HelloWorld\\Providers\\HelloWorldServiceProvider",
+  "permissions": [
+    "helloworld.view"
+  ]
 }

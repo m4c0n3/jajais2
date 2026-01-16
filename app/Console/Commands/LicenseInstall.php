@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Support\Licensing\LicenseService;
+use App\Support\Audit\AuditService;
 use Carbon\CarbonImmutable;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
@@ -68,7 +69,21 @@ class LicenseInstall extends Command
         $licenseService->clearCache();
 
         $this->info('License token installed.');
+        $this->logAudit('license.install');
 
         return self::SUCCESS;
+    }
+
+    private function logAudit(string $action): void
+    {
+        if (!class_exists(AuditService::class)) {
+            return;
+        }
+
+        try {
+            app(AuditService::class)->log($action);
+        } catch (\Throwable) {
+            // Best-effort only.
+        }
     }
 }

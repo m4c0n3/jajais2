@@ -34,6 +34,7 @@ class ModuleBootManager
                 'name' => $manifest->name,
                 'version' => $manifest->version,
                 'provider' => $manifest->provider,
+                'permissions' => $manifest->permissions,
                 'enabled' => $state ? (bool) $state->enabled : false,
                 'license_required' => $state ? (bool) $state->license_required : $manifest->licenseRequired,
                 'requires_core' => $state?->requires_core,
@@ -87,6 +88,22 @@ class ModuleBootManager
         }
 
         return $registered;
+    }
+
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    public function getActiveModules(): array
+    {
+        $active = [];
+
+        foreach ($this->getRegistry() as $module) {
+            if ($this->isActive($module)) {
+                $active[] = $module;
+            }
+        }
+
+        return $active;
     }
 
     public function clearCache(): void

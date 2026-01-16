@@ -84,6 +84,13 @@ Manifest minimálne obsahuje `id`, `name`, `version`. Záznam v tabuľke `module
 
 HelloWorld modul po enable pridá route `GET /hello`.
 
+## RBAC (Permissions)
+
+Permissions zapisuj do `module.json` (napr. `"helloworld.view"`). Synchronizácia:
+- `php artisan rbac:sync`
+
+Strategy pre `super-admin`: vytvára sa rola `super-admin` (a `admin`) a má mať všetky permissions priradené manuálne podľa potreby.
+
 ## Control Plane Agent
 
 Kontrakt API je v `docs/control-plane-contract.md`. Agent modul je v `modules/Agent` a používa príkazy:
