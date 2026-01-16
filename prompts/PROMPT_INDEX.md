@@ -21,3 +21,4 @@ Tento súbor je zdroj pravdy pre číslovanie a stav promptov.
 | CP-0004 | 1.0.0   | Boot aktívnych modulov + enable/disable + cache | ready  | prompts/codex/CP-0004-module-boot-manager.md |
 | CP-0005 | 1.0.0   | RBAC sync z manifestov + audit log minimum | ready  | prompts/codex/CP-0005-rbac-and-audit.md |
 | CP-0006 | 1.0.0   | Control Plane kontrakt + Agent modul (heartbeat + license refresh) | ready  | prompts/codex/CP-0006-control-plane-agent.md |
+| CP-0007 | 1.0.0   | Agent hardening + trust model (JWT RS256) + ops | ready  | prompts/codex/CP-0007-agent-hardening-rs256.md |
