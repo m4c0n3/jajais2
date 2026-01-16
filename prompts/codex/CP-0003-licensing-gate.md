@@ -2,7 +2,7 @@
 
 ## Meta
 - ID: CP-0003
-- Version: 1.0.0
+- Version: 1.0.1
 - Title: Licensing cache + EnsureModuleActive middleware
 - Status: ready
 - Date: 2026-01-16
@@ -147,3 +147,7 @@ Po úspešnom dokončení implementácie a validácii:
   - commit message: "CP-0003: licensing cache and module active middleware"
   - `git push` na aktuálny branch (ak je remote nastavený)
 - ak nie sú žiadne zmeny, nevytváraj prázdny commit, ale uveď to v reporte
+
+
+## Validation note
+- 2026-01-16: `php artisan migrate` OK, `php artisan test` OK (6 tests, 9 assertions). DoD = PASS.
