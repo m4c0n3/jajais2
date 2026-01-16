@@ -57,3 +57,30 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Prompting Standard (Codex)
+
+Všetky implementačné prompty pre Codex udržiavame verzované v repozitári v adresári `/prompts`.
+
+### Číslovanie
+- Každý prompt má unikátne ID: `CP-0001`, `CP-0002`, ...
+- ID je sekvenčné a nikdy sa neopakuje.
+
+### Verzionovanie
+- Každý prompt má `Version: x.y.z` (SemVer).
+- Opravy textu = patch, rozšírenie krokov = minor, zásadná zmena stratégie = major.
+- Výrazná zmena cieľa = nový prompt s novým CP ID.
+
+### Povinné časti promptu
+Každý prompt musí obsahovať:
+- Scope (in/out)
+- Návrh riešenia (čo, prečo, alternatívy)
+- Dopady (security, výkon, DB, kompatibilita)
+- Kroky pre Codex
+- DoD (akceptačné kritériá)
+- Validácia (príkazy a očakávania)
+- Rollback plán
+- Report pre človeka
+
+### Register promptov
+- `prompts/PROMPT_INDEX.md` je zdroj pravdy pre poradie a stav promptov.
