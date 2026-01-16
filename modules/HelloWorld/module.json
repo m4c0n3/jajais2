@@ -2,5 +2,6 @@
   "id": "HelloWorld",
   "name": "HelloWorld",
   "version": "1.0.0",
-  "license_required": false
+  "license_required": false,
+  "provider": "Modules\\HelloWorld\\Providers\\HelloWorldServiceProvider"
 }

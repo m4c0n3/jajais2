@@ -75,6 +75,15 @@ Moduly ukladaj do `modules/<ModuleName>/module.json`. Discovery spustíš príka
 
 Manifest minimálne obsahuje `id`, `name`, `version`. Záznam v tabuľke `modules` sa vytvorí s `enabled=false`.
 
+## Module Boot + Commands
+
+- Enable modul: `php artisan module:enable HelloWorld`
+- Disable modul: `php artisan module:disable HelloWorld`
+- Cache registry: `php artisan module:cache`
+- Clear cache: `php artisan module:clear-cache`
+
+HelloWorld modul po enable pridá route `GET /hello`.
+
 ## Control Plane Agent
 
 Kontrakt API je v `docs/control-plane-contract.md`. Agent modul je v `modules/Agent` a používa príkazy:

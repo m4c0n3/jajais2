@@ -22,18 +22,23 @@ class ModuleDiscover extends Command
             return self::FAILURE;
         }
 
+        if (class_exists(\App\Support\Modules\ModuleBootManager::class)) {
+            app(\App\Support\Modules\ModuleBootManager::class)->clearCache();
+        }
+
         if ($results === []) {
             $this->info('No modules found.');
 
             return self::SUCCESS;
         }
 
-        $this->table(['ID', 'Version', 'Enabled', 'License Required'], array_map(function (array $row): array {
+        $this->table(['ID', 'Version', 'Enabled', 'License Required', 'Provider'], array_map(function (array $row): array {
             return [
                 $row['id'],
                 $row['version'],
                 $row['enabled'] ? 'yes' : 'no',
                 $row['license_required'] ? 'yes' : 'no',
+                $row['provider'] ?? '-',
             ];
         }, $results));
 

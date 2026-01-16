@@ -33,6 +33,7 @@ class ModuleRepository
                     'version' => $manifest->version,
                     'enabled' => (bool) $existing->enabled,
                     'license_required' => (bool) $manifest->licenseRequired,
+                    'provider' => $manifest->provider,
                 ];
 
                 continue;
@@ -54,6 +55,7 @@ class ModuleRepository
                 'version' => $manifest->version,
                 'enabled' => false,
                 'license_required' => (bool) $manifest->licenseRequired,
+                'provider' => $manifest->provider,
             ];
         }
 
