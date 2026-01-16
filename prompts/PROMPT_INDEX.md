@@ -16,4 +16,5 @@ Tento súbor je zdroj pravdy pre číslovanie a stav promptov.
 | ID      | Version | Title                           | Status | File |
 |---------|---------|----------------------------------|--------|------|
 | CP-0001 | 1.0.0   | Prompt registry a štandard       | ready  | prompts/codex/CP-0001-prompt-registry.md |
-| CP-0002 | -       | Module discovery + modules table | draft  | (tbd) |
+| CP-0002 | 1.0.0   | Module discovery + modules tabuľka + module:discover | ready  | prompts/codex/CP-0002-module-discovery.md |
+| CP-0003 | 1.0.0   | Licensing cache + EnsureModuleActive middleware | ready  | prompts/codex/CP-0003-licensing-gate.md |
