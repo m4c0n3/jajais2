@@ -58,6 +58,16 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
+## Licensing Gate (Modules)
+
+Lokálny licensing cache a middleware pre modulové routy:
+
+- Ulož token: `php artisan license:install --token="..."`
+- Alebo z file: `php artisan license:install --file=/path/to/token.txt`
+- Použitie v routach: `->middleware('module.active:blog')` alebo `EnsureModuleActive::class.':blog'`
+
+Triedy sú v `app/Support/Licensing/LicenseService.php` a `app/Http/Middleware/EnsureModuleActive.php`.
+
 ## Prompting Standard (Codex)
 
 Všetky implementačné prompty pre Codex udržiavame verzované v repozitári v adresári `/prompts`.
