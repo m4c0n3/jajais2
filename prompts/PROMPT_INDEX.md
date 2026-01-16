@@ -19,3 +19,4 @@ Tento súbor je zdroj pravdy pre číslovanie a stav promptov.
 | CP-0002 | 1.0.0   | Module discovery + modules tabuľka + module:discover | ready  | prompts/codex/CP-0002-module-discovery.md |
 | CP-0003 | 1.0.0   | Licensing cache + EnsureModuleActive middleware | ready  | prompts/codex/CP-0003-licensing-gate.md |
 | CP-0004 | 1.0.0   | Boot aktívnych modulov + enable/disable + cache | ready  | prompts/codex/CP-0004-module-boot-manager.md |
+| CP-0005 | 1.0.0   | RBAC sync z manifestov + audit log minimum | ready  | prompts/codex/CP-0005-rbac-and-audit.md |
