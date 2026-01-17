@@ -6,13 +6,14 @@ use App\Support\Modules\ModuleBootManager;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use App\Support\Audit\AuditService;
+use App\Support\Webhooks\WebhookDispatcher;
 
 class ModuleDisable extends Command
 {
     protected $signature = 'module:disable {id}';
     protected $description = 'Disable a module by id';
 
-    public function handle(ModuleBootManager $bootManager): int
+    public function handle(ModuleBootManager $bootManager, WebhookDispatcher $dispatcher): int
     {
         $id = (string) $this->argument('id');
 
@@ -29,6 +30,7 @@ class ModuleDisable extends Command
 
         $this->info("Module disabled: {$id}");
         $this->logAudit('module.disable', $id);
+        $dispatcher->dispatch('module.disabled', ['id' => $id]);
 
         return self::SUCCESS;
     }

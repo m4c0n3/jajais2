@@ -5,6 +5,7 @@ namespace Modules\Agent\Services;
 use App\Support\Audit\AuditService;
 use App\Support\Licensing\LicenseService;
 use App\Support\Licensing\JwtTokenVerifier;
+use App\Support\Webhooks\WebhookDispatcher;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
@@ -131,6 +132,10 @@ class AgentService
         ]);
 
         $this->clearLicenseCache();
+        $this->dispatchWebhook('license.updated', [
+            'valid_to' => $validTo?->toIso8601String(),
+            'grace_to' => $graceTo?->toIso8601String(),
+        ]);
 
         return ['ok' => true];
     }
@@ -277,6 +282,19 @@ class AgentService
             app(AuditService::class)->log($action, [
                 'metadata' => $metadata,
             ]);
+        } catch (\Throwable) {
+            // Best-effort only.
+        }
+    }
+
+    private function dispatchWebhook(string $event, array $data): void
+    {
+        if (!class_exists(WebhookDispatcher::class)) {
+            return;
+        }
+
+        try {
+            app(WebhookDispatcher::class)->dispatch($event, $data);
         } catch (\Throwable) {
             // Best-effort only.
         }

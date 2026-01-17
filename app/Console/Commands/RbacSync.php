@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Support\Audit\AuditService;
 use App\Support\Modules\ModuleBootManager;
+use App\Support\Webhooks\WebhookDispatcher;
 use Illuminate\Console\Command;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -13,7 +14,7 @@ class RbacSync extends Command
     protected $signature = 'rbac:sync';
     protected $description = 'Sync RBAC permissions from active module manifests';
 
-    public function handle(ModuleBootManager $bootManager): int
+    public function handle(ModuleBootManager $bootManager, WebhookDispatcher $dispatcher): int
     {
         $guard = (string) config('auth.defaults.guard', 'web');
         $activeModules = $bootManager->getActiveModules();
@@ -44,6 +45,7 @@ class RbacSync extends Command
             'created' => $created,
             'permissions' => $permissions,
         ]);
+        $dispatcher->dispatch('rbac.synced', ['created' => $created]);
 
         return self::SUCCESS;
     }

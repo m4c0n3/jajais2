@@ -102,6 +102,10 @@ Kontrakt API je v `docs/control-plane-contract.md`. Agent modul je v `modules/Ag
 Nastavenie a scheduler sú popísané v `modules/Agent/docs/README.md`.
 Bezpečnostné nastavenia a rotácia kľúčov: `docs/agent-hardening.md`.
 
+## Webhooks
+
+Outgoing webhooks dokumentácia: `docs/webhooks.md` a n8n príklad: `docs/n8n-webhook-receiver.md`.
+
 ## Prompting Standard (Codex)
 
 Všetky implementačné prompty pre Codex udržiavame verzované v repozitári v adresári `/prompts`.

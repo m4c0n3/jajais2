@@ -6,13 +6,14 @@ use App\Support\Modules\ModuleBootManager;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use App\Support\Audit\AuditService;
+use App\Support\Webhooks\WebhookDispatcher;
 
 class ModuleEnable extends Command
 {
     protected $signature = 'module:enable {id}';
     protected $description = 'Enable a module by id';
 
-    public function handle(ModuleBootManager $bootManager): int
+    public function handle(ModuleBootManager $bootManager, WebhookDispatcher $dispatcher): int
     {
         $id = (string) $this->argument('id');
 
@@ -29,6 +30,7 @@ class ModuleEnable extends Command
 
         $this->info("Module enabled: {$id}");
         $this->logAudit('module.enable', $id);
+        $dispatcher->dispatch('module.enabled', ['id' => $id]);
 
         return self::SUCCESS;
     }
