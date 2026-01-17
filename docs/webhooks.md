@@ -13,6 +13,9 @@
 - `module.disabled`
 - `rbac.synced`
 - `license.updated`
+- `update.available`
+- `update.applied`
+- `update.failed`
 
 ## Payload
 ```json

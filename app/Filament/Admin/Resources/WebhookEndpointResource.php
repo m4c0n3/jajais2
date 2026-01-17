@@ -155,6 +155,9 @@ class WebhookEndpointResource extends Resource
             'module.disabled' => 'module.disabled',
             'rbac.synced' => 'rbac.synced',
             'license.updated' => 'license.updated',
+            'update.available' => 'update.available',
+            'update.applied' => 'update.applied',
+            'update.failed' => 'update.failed',
             'agent.heartbeat_failed' => 'agent.heartbeat_failed',
             'webhook.test' => 'webhook.test',
         ];
