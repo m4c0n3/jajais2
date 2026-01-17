@@ -1,4 +1,5 @@
 
+| CP-0025 | 1.0.0   | Admin access bootstrap + sprava pouzivatelov (Filament) | ready  | prompts/codex/CP-0025-admin-access-user-management.md |
 | CP-0024 | 1.0.0   | Backup/Restore + key compromise playbook | ready  | prompts/codex/CP-0024-backup-restore-key-compromise.md |
 | CP-0023 | 1.0.0   | Observability minimum (request id + metrics) | ready  | prompts/codex/CP-0023-observability-minimum.md |
 | CP-0022 | 1.0.0   | Cloudron release & update runbook | ready  | prompts/codex/CP-0022-cloudron-release-update-runbook.md |
