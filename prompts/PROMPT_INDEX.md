@@ -23,3 +23,4 @@ Tento súbor je zdroj pravdy pre číslovanie a stav promptov.
 | CP-0006 | 1.0.0   | Control Plane kontrakt + Agent modul (heartbeat + license refresh) | ready  | prompts/codex/CP-0006-control-plane-agent.md |
 | CP-0007 | 1.0.0   | Agent hardening + trust model (JWT RS256) + ops | ready  | prompts/codex/CP-0007-agent-hardening-rs256.md |
 | CP-0008 | 1.0.0   | Outgoing Webhooks engine + n8n integrácia | ready  | prompts/codex/CP-0008-webhooks-n8n.md |
+| CP-0009 | 1.0.0   | Admin UI (Filament) pre Webhooks + Deliveries | ready  | prompts/codex/CP-0009-admin-ui-filament.md |
