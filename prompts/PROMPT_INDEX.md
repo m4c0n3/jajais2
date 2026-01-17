@@ -1,4 +1,8 @@
 
+| CP-0024 | 1.0.0   | Backup/Restore + key compromise playbook | ready  | prompts/codex/CP-0024-backup-restore-key-compromise.md |
+| CP-0023 | 1.0.0   | Observability minimum (request id + metrics) | ready  | prompts/codex/CP-0023-observability-minimum.md |
+| CP-0022 | 1.0.0   | Cloudron release & update runbook | ready  | prompts/codex/CP-0022-cloudron-release-update-runbook.md |
+| CP-0021 | 1.0.0   | Cloudron smoke tests + runbook | ready  | prompts/codex/CP-0021-cloudron-smoke-tests-runbook.md |
 | CP-0020 | 1.0.0   | Cloudron package (single app, installer-driven) | ready  | prompts/codex/CP-0020-cloudron-package-single-app.md |
 | CP-0019 | 1.0.0   | Control Plane modules (instances + entitlements + JWT) | ready  | prompts/codex/CP-0019-control-plane-modules.md |
 | CP-0018 | 1.0.0   | Module-scoped migrations (enabled-only) | ready  | prompts/codex/CP-0018-module-scoped-migrations.md |
