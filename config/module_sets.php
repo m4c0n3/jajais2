@@ -8,5 +8,6 @@ return [
     'control-plane' => [
         'ControlPlaneCore',
         'ControlPlaneAdmin',
+        'HelloWorld',
     ],
 ];

@@ -4,6 +4,7 @@ namespace App\Support\System;
 
 use App\Models\User;
 use App\Support\Modules\ModuleBootManager;
+use App\Support\System\ModuleSetResolver;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -12,7 +13,11 @@ use Spatie\Permission\Models\Role;
 
 class SystemInstaller
 {
-    public function __construct(private SystemSettings $settings, private ModuleBootManager $bootManager)
+    public function __construct(
+        private SystemSettings $settings,
+        private ModuleBootManager $bootManager,
+        private ModuleSetResolver $setResolver
+    )
     {
     }
 
@@ -57,7 +62,7 @@ class SystemInstaller
 
     private function enableModuleSet(string $mode): void
     {
-        $set = config('module_sets.'.$mode, []);
+        $set = $this->setResolver->resolve($mode);
 
         if (!is_array($set) || $set === []) {
             return;

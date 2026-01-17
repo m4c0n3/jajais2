@@ -12,6 +12,7 @@ use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\Widgets;
+use App\Support\System\AppMode;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -23,7 +24,7 @@ class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
-        return $panel
+        $panel = $panel
             ->id('admin')
             ->path('admin')
             ->login()
@@ -62,5 +63,11 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ]);
+
+        if (app(AppMode::class)->isControlPlane()) {
+            $panel->discoverResources(in: base_path('modules/ControlPlaneAdmin/src/Filament/Resources'), for: 'Modules\\ControlPlaneAdmin\\Filament\\Resources');
+        }
+
+        return $panel;
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Support\Modules;
 
 use App\Support\Licensing\LicenseService;
+use App\Support\System\AppMode;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
@@ -113,6 +114,20 @@ class ModuleBootManager
 
     private function isActive(array $module): bool
     {
+        $mode = app(AppMode::class)->current();
+        $moduleId = $module['id'] ?? null;
+        if ($mode === AppMode::CLIENT && is_string($moduleId) && str_starts_with($moduleId, 'ControlPlane')) {
+            logger()->info('Module skipped: control-plane only', ['module' => $moduleId]);
+
+            return false;
+        }
+
+        if ($mode === AppMode::CONTROL_PLANE && is_string($moduleId) && $moduleId === 'Agent') {
+            logger()->info('Module skipped: client only', ['module' => $moduleId]);
+
+            return false;
+        }
+
         if (empty($module['provider']) || !is_string($module['provider'])) {
             logger()->info('Module skipped: missing provider', ['module' => $module['id']]);
 

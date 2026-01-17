@@ -1,0 +1,11 @@
+{
+  "id": "ControlPlaneAdmin",
+  "name": "ControlPlaneAdmin",
+  "version": "1.0.0",
+  "license_required": false,
+  "provider": "Modules\\ControlPlaneAdmin\\Providers\\ControlPlaneAdminServiceProvider",
+  "permissions": [
+    "controlplane.view",
+    "controlplane.manage"
+  ]
+}

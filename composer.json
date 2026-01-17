@@ -27,6 +27,8 @@
         "psr-4": {
             "App\\": "app/",
             "Modules\\Agent\\": "modules/Agent/src/",
+            "Modules\\ControlPlaneCore\\": "modules/ControlPlaneCore/src/",
+            "Modules\\ControlPlaneAdmin\\": "modules/ControlPlaneAdmin/src/",
             "Modules\\HelloWorld\\": "modules/HelloWorld/src/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
