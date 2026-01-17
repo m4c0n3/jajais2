@@ -7,6 +7,7 @@ use Illuminate\Support\ServiceProvider;
 use Modules\Agent\Console\Commands\AgentHeartbeatCommand;
 use Modules\Agent\Console\Commands\AgentLicenseRefreshCommand;
 use Modules\Agent\Console\Commands\AgentRegisterCommand;
+use Modules\Agent\Console\Commands\AgentStatusCommand;
 
 class AgentServiceProvider extends ServiceProvider
 {
@@ -24,6 +25,7 @@ class AgentServiceProvider extends ServiceProvider
                 AgentRegisterCommand::class,
                 AgentHeartbeatCommand::class,
                 AgentLicenseRefreshCommand::class,
+                AgentStatusCommand::class,
             ]);
         }
 

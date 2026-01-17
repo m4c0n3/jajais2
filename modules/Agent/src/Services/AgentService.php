@@ -2,7 +2,9 @@
 
 namespace Modules\Agent\Services;
 
+use App\Support\Audit\AuditService;
 use App\Support\Licensing\LicenseService;
+use App\Support\Licensing\JwtTokenVerifier;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
@@ -96,16 +98,28 @@ class AgentService
             return ['ok' => false, 'message' => 'License refresh missing token.'];
         }
 
-        $validTo = $this->parseDate($data['valid_to'] ?? null) ?? CarbonImmutable::now();
-        $graceTo = $this->parseDate($data['grace_to'] ?? null);
-        $parsed = is_array($data['parsed'] ?? null) ? $data['parsed'] : null;
+        try {
+            $audience = config('agent.jwt_audience') ?: $state['instance_uuid'];
+            $claims = app(JwtTokenVerifier::class)->verify($token, $audience);
+        } catch (\Throwable $exception) {
+            $this->recordInvalidToken($token, $exception->getMessage());
+            $this->updateLastError($state['instance_uuid'], 'License token invalid.');
+            $this->logAudit('license.token_invalid', [
+                'reason' => $exception->getMessage(),
+            ]);
+
+            return ['ok' => false, 'message' => 'License token invalid.'];
+        }
+
+        $validTo = $this->parseDate($claims['valid_to'] ?? null) ?? $this->parseDate($data['valid_to'] ?? null) ?? CarbonImmutable::now();
+        $graceTo = $this->parseDate($claims['grace_to'] ?? null) ?? $this->parseDate($data['grace_to'] ?? null);
 
         DB::table('license_tokens')->insert([
             'fetched_at' => CarbonImmutable::now(),
             'valid_to' => $validTo,
             'grace_to' => $graceTo,
             'token' => $token,
-            'parsed' => $parsed ? json_encode($parsed) : null,
+            'parsed' => json_encode($claims),
             'created_at' => CarbonImmutable::now(),
             'updated_at' => CarbonImmutable::now(),
         ]);
@@ -231,6 +245,40 @@ class AgentService
     {
         if (class_exists(LicenseService::class)) {
             app(LicenseService::class)->clearCache();
+        }
+    }
+
+    private function recordInvalidToken(string $token, string $error): void
+    {
+        if (!Schema::hasTable('license_tokens')) {
+            return;
+        }
+
+        DB::table('license_tokens')->insert([
+            'fetched_at' => CarbonImmutable::now(),
+            'valid_to' => CarbonImmutable::now(),
+            'grace_to' => null,
+            'token' => $token,
+            'parsed' => null,
+            'revoked_at' => CarbonImmutable::now(),
+            'last_refresh_error' => $error,
+            'created_at' => CarbonImmutable::now(),
+            'updated_at' => CarbonImmutable::now(),
+        ]);
+    }
+
+    private function logAudit(string $action, array $metadata = []): void
+    {
+        if (!class_exists(AuditService::class)) {
+            return;
+        }
+
+        try {
+            app(AuditService::class)->log($action, [
+                'metadata' => $metadata,
+            ]);
+        } catch (\Throwable) {
+            // Best-effort only.
         }
     }
 

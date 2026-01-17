@@ -97,8 +97,10 @@ Kontrakt API je v `docs/control-plane-contract.md`. Agent modul je v `modules/Ag
 - `php artisan agent:register`
 - `php artisan agent:heartbeat`
 - `php artisan agent:license-refresh`
+- `php artisan agent:status`
 
 Nastavenie a scheduler sú popísané v `modules/Agent/docs/README.md`.
+Bezpečnostné nastavenia a rotácia kľúčov: `docs/agent-hardening.md`.
 
 ## Prompting Standard (Codex)
 

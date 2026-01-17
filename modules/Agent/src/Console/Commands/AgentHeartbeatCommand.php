@@ -16,14 +16,14 @@ class AgentHeartbeatCommand extends Command
             $result = $agentService->sendHeartbeat();
         } catch (\Throwable $exception) {
             $this->error($exception->getMessage());
-            $this->logAudit('agent.heartbeat', ['error' => $exception->getMessage()]);
+            $this->logAudit('agent.heartbeat_failed', ['error' => $exception->getMessage()]);
 
             return self::FAILURE;
         }
 
         if (!$result['ok']) {
             $this->error($result['message'] ?? 'Heartbeat failed.');
-            $this->logAudit('agent.heartbeat', ['error' => $result['message'] ?? 'heartbeat failed']);
+            $this->logAudit('agent.heartbeat_failed', ['error' => $result['message'] ?? 'heartbeat failed']);
 
             return self::FAILURE;
         }

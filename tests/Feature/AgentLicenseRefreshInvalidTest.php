@@ -2,14 +2,16 @@
 
 namespace Tests\Feature;
 
+use Carbon\CarbonImmutable;
+use Firebase\JWT\JWT;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Schema;
-use Firebase\JWT\JWT;
 use Tests\TestCase;
 
-class AgentLicenseRefreshTest extends TestCase
+class AgentLicenseRefreshInvalidTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -62,6 +64,7 @@ PEM;
 
         $this->createInstanceStateTable();
         $this->createLicenseTokensTable();
+        $this->createAuditLogsTable();
 
         config()->set('agent.enabled', true);
         config()->set('agent.base_url', 'https://control-plane.test');
@@ -71,35 +74,44 @@ PEM;
         config()->set('agent.jwt_audience', 'instance-uuid');
     }
 
-    public function test_license_refresh_stores_token(): void
+    public function test_invalid_token_is_not_activated(): void
     {
-        \Illuminate\Support\Facades\DB::table('instance_state')->insert([
+        DB::table('instance_state')->insert([
             'instance_uuid' => 'instance-uuid',
-            'created_at' => \Carbon\CarbonImmutable::now(),
-            'updated_at' => \Carbon\CarbonImmutable::now(),
+            'created_at' => CarbonImmutable::now(),
+            'updated_at' => CarbonImmutable::now(),
+        ]);
+
+        DB::table('license_tokens')->insert([
+            'fetched_at' => CarbonImmutable::now(),
+            'valid_to' => CarbonImmutable::now()->addDay(),
+            'grace_to' => CarbonImmutable::now()->addDays(2),
+            'token' => 'active-token',
+            'parsed' => json_encode(['modules' => ['HelloWorld']]),
+            'created_at' => CarbonImmutable::now(),
+            'updated_at' => CarbonImmutable::now(),
         ]);
 
         $jwt = JWT::encode([
-            'iss' => 'control-plane',
+            'iss' => 'wrong-issuer',
             'aud' => 'instance-uuid',
             'exp' => time() + 60,
             'nbf' => time() - 10,
-            'modules' => ['agent'],
         ], self::PRIVATE_KEY, 'RS256');
 
         Http::fake([
             'https://control-plane.test/*' => Http::response([
                 'token' => $jwt,
                 'valid_to' => '2030-01-01T00:00:00Z',
-                'grace_to' => '2030-01-02T00:00:00Z',
             ], 200),
         ]);
 
-        $this->artisan('agent:license-refresh')->assertExitCode(0);
+        $this->artisan('agent:license-refresh')->assertExitCode(1);
 
-        $this->assertDatabaseCount('license_tokens', 1);
-        $this->assertDatabaseHas('license_tokens', [
-            'token' => $jwt,
+        $this->assertSame(1, DB::table('license_tokens')->whereNull('revoked_at')->count());
+        $this->assertSame(1, DB::table('license_tokens')->whereNotNull('revoked_at')->count());
+        $this->assertDatabaseHas('audit_logs', [
+            'action' => 'license.token_invalid',
         ]);
     }
 
@@ -137,6 +149,26 @@ PEM;
             $table->string('last_refresh_status')->nullable();
             $table->text('last_refresh_error')->nullable();
             $table->timestamps();
+        });
+    }
+
+    private function createAuditLogsTable(): void
+    {
+        if (Schema::hasTable('audit_logs')) {
+            return;
+        }
+
+        Schema::create('audit_logs', function (Blueprint $table): void {
+            $table->id();
+            $table->string('actor_type');
+            $table->unsignedBigInteger('actor_id')->nullable();
+            $table->string('action');
+            $table->string('target_type')->nullable();
+            $table->string('target_id')->nullable();
+            $table->json('metadata')->nullable();
+            $table->string('ip')->nullable();
+            $table->string('user_agent')->nullable();
+            $table->timestamp('created_at')->useCurrent();
         });
     }
 }

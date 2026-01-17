@@ -16,14 +16,14 @@ class AgentLicenseRefreshCommand extends Command
             $result = $agentService->refreshLicenseToken();
         } catch (\Throwable $exception) {
             $this->error($exception->getMessage());
-            $this->logAudit('agent.license_refresh', ['error' => $exception->getMessage()]);
+            $this->logAudit('agent.license_refresh_failed', ['error' => $exception->getMessage()]);
 
             return self::FAILURE;
         }
 
         if (!$result['ok']) {
             $this->error($result['message'] ?? 'License refresh failed.');
-            $this->logAudit('agent.license_refresh', ['error' => $result['message'] ?? 'license refresh failed']);
+            $this->logAudit('agent.license_refresh_failed', ['error' => $result['message'] ?? 'license refresh failed']);
 
             return self::FAILURE;
         }
