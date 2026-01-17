@@ -31,7 +31,8 @@ class WebhookSender
         return Http::timeout((int) $endpoint->timeout_seconds)
             ->acceptJson()
             ->withHeaders($headers)
-            ->post($endpoint->url, $delivery->payload);
+            ->withBody($payload, 'application/json')
+            ->post($endpoint->url);
     }
 
     public function shouldRetry(?Response $response, ?Throwable $exception): bool
