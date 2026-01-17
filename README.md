@@ -106,6 +106,10 @@ Bezpečnostné nastavenia a rotácia kľúčov: `docs/agent-hardening.md`.
 
 Outgoing webhooks dokumentácia: `docs/webhooks.md` a n8n príklad: `docs/n8n-webhook-receiver.md`.
 
+## Admin UI
+
+Admin panel je na `/admin`. Setup a RBAC: `docs/admin-ui.md`.
+
 ## Prompting Standard (Codex)
 
 Všetky implementačné prompty pre Codex udržiavame verzované v repozitári v adresári `/prompts`.

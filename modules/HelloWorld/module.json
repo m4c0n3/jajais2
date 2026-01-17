@@ -5,6 +5,10 @@
   "license_required": false,
   "provider": "Modules\\HelloWorld\\Providers\\HelloWorldServiceProvider",
   "permissions": [
-    "helloworld.view"
+    "helloworld.view",
+    "admin.access",
+    "webhooks.view",
+    "webhooks.manage",
+    "webhooks.replay"
   ]
 }
