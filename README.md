@@ -107,6 +107,12 @@ Blueprint pre Control Plane server: `docs/control-plane-mvp.md`.
 
 Outgoing webhooks dokumentácia: `docs/webhooks.md` a n8n príklad: `docs/n8n-webhook-receiver.md`.
 
+## Cloudron
+
+- Deploy guide: `docs/cloudron-deploy.md`
+- Smoke tests: `docs/cloudron-smoke-tests.md`
+- Runbook: `docs/cloudron-runbook.md`
+
 ## Admin UI
 
 Admin panel je na `/admin`. Setup a RBAC: `docs/admin-ui.md`.
