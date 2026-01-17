@@ -1,4 +1,8 @@
 
+| CP-0020 | 1.0.0   | Cloudron package (single app, installer-driven) | ready  | prompts/codex/CP-0020-cloudron-package-single-app.md |
+| CP-0019 | 1.0.0   | Control Plane modules (instances + entitlements + JWT) | ready  | prompts/codex/CP-0019-control-plane-modules.md |
+| CP-0018 | 1.0.0   | Module-scoped migrations (enabled-only) | ready  | prompts/codex/CP-0018-module-scoped-migrations.md |
+| CP-0017 | 1.0.0   | App Mode + Installer + Module Sets | ready  | prompts/codex/CP-0017-app-mode-installer-module-sets.md |
 # Prompt Index (Codex)
 
 Tento súbor je zdroj pravdy pre číslovanie a stav promptov.
