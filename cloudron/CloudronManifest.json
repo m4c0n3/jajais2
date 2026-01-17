@@ -1,0 +1,17 @@
+{
+  "id": "com.jajais.app",
+  "title": "Jajais",
+  "author": "Jajais",
+  "description": "Installer-driven module platform (client/control-plane)",
+  "tagline": "Modules with control plane",
+  "version": "0.1.0",
+  "healthCheckPath": "/health",
+  "httpPort": 8000,
+  "manifestVersion": 2,
+  "addons": {
+    "localstorage": {},
+    "mysql": {},
+    "redis": {},
+    "scheduler": {}
+  }
+}
