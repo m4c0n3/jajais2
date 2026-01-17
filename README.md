@@ -101,6 +101,7 @@ Kontrakt API je v `docs/control-plane-contract.md`. Agent modul je v `modules/Ag
 
 Nastavenie a scheduler sú popísané v `modules/Agent/docs/README.md`.
 Bezpečnostné nastavenia a rotácia kľúčov: `docs/agent-hardening.md`.
+Blueprint pre Control Plane server: `docs/control-plane-mvp.md`.
 
 ## Webhooks
 
