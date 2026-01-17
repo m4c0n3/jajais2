@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class SystemInstaller
@@ -46,11 +47,7 @@ class SystemInstaller
         $admin = $this->ensureAdminUser($adminName, $adminEmail, $adminPassword);
 
         Artisan::call('rbac:sync');
-
-        $role = Role::where('name', 'super-admin')->first();
-        if ($role) {
-            $admin->assignRole($role);
-        }
+        $this->ensureAdminAccess($admin);
     }
 
     private function validateMode(string $mode): void
@@ -93,5 +90,18 @@ class SystemInstaller
             'email' => $email,
             'password' => Hash::make($password),
         ]);
+    }
+
+    private function ensureAdminAccess(User $user): void
+    {
+        $guard = (string) config('auth.defaults.guard', 'web');
+        $adminAccess = Permission::findOrCreate('admin.access', $guard);
+        $usersManage = Permission::findOrCreate('users.manage', $guard);
+
+        $role = Role::firstOrCreate(['name' => 'super-admin', 'guard_name' => $guard]);
+        $role->givePermissionTo([$adminAccess, $usersManage]);
+
+        $user->syncRoles([$role]);
+        $user->givePermissionTo($adminAccess);
     }
 }

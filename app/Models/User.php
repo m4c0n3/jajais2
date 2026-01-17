@@ -53,6 +53,17 @@ class User extends Authenticatable implements FilamentUser
 
     public function canAccessPanel(Panel $panel): bool
     {
-        return $this->hasRole('super-admin') || $this->hasPermissionTo('admin.access');
+        $allowed = $this->hasRole('super-admin') || $this->hasPermissionTo('admin.access');
+
+        if (!$allowed) {
+            logger()->warning('Admin panel access denied', [
+                'user_id' => $this->id,
+                'email' => $this->email,
+            ]);
+
+            abort(403, 'You do not have access to the admin panel. Ask an administrator to grant admin.access or super-admin.');
+        }
+
+        return true;
     }
 }

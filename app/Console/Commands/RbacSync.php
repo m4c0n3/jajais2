@@ -21,6 +21,16 @@ class RbacSync extends Command
 
         $created = 0;
         $permissions = [];
+        $corePermissions = ['admin.access', 'users.manage'];
+
+        foreach ($corePermissions as $permission) {
+            $permissions[] = $permission;
+
+            if (!Permission::where('name', $permission)->where('guard_name', $guard)->exists()) {
+                Permission::create(['name' => $permission, 'guard_name' => $guard]);
+                $created++;
+            }
+        }
 
         foreach ($activeModules as $module) {
             foreach ($module['permissions'] ?? [] as $permission) {
