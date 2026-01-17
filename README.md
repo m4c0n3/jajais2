@@ -110,6 +110,28 @@ Outgoing webhooks dokumentácia: `docs/webhooks.md` a n8n príklad: `docs/n8n-we
 
 Admin panel je na `/admin`. Setup a RBAC: `docs/admin-ui.md`.
 
+## Requirements
+
+- PHP 8.4+
+- Composer
+- SQLite or MySQL
+
+## Quickstart
+
+1) `composer install`
+2) `cp .env.example .env`
+3) `php artisan key:generate`
+4) `php artisan migrate`
+5) `bash scripts/check-env.sh`
+
+## Tests
+
+- `php artisan test`
+
+## Dev Setup
+
+Detailný setup: `docs/dev-setup.md`.
+
 ## Prompting Standard (Codex)
 
 Všetky implementačné prompty pre Codex udržiavame verzované v repozitári v adresári `/prompts`.
