@@ -16,41 +16,31 @@ Po CP-0010 máme jasné požiadavky na prostredie. Teraz chceme CI, aby sa:
 ## Scope
 ### In scope
 - GitHub Actions workflow `.github/workflows/ci.yml`
-- Trigger:
-  - push na main
-  - pull_request
-- Jobs:
-  1) tests-sqlite (default)
+- Trigger: push na main, pull_request
+- Joby:
+  1) `tests-sqlite` (default)
      - PHP 8.4
      - SQLite
-     - `composer install`
-     - `php artisan key:generate`
-     - `php artisan migrate --force`
-     - `php artisan test`
-  2) (voliteľné) tests-mysql
-     - MySQL service
-     - DB config cez env
-     - migrate + test
+     - composer install
+     - app key generate
+     - migrate --force
+     - tests
+  2) `tests-mysql` (voliteľné)
+     - MySQL service container
+     - migrate + tests
 - Cache:
-  - composer cache + vendor
-- Quality gates (voliteľné, ak sú v projekte):
-  - `composer audit` (nezastaví build pri false positive? rozhodnúť: fail on vulnerabilities)
-  - Laravel Pint (ak existuje): `./vendor/bin/pint --test`
+  - composer cache
 
 ### Out of scope
 - Deployment pipeline
-- Full SAST/DAST
 
 ## DoD
 - [ ] CI beží na push/PR
 - [ ] tests-sqlite job je zelený
 - [ ] (voliteľne) mysql job je zelený
-- [ ] cache funguje
-- [ ] README doplnené o badge/CI info (voliteľné)
 
 ## Validácia
-- otvoriť PR a pozrieť status
-- lokálne nie je potrebné
+- cez GitHub PR status
 
 ## Git workflow
 - commit: "CP-0011: add GitHub Actions CI"

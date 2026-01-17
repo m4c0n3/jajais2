@@ -1,5 +1,4 @@
 
-
 # Prompt Index (Codex)
 
 Tento súbor je zdroj pravdy pre číslovanie a stav promptov.
@@ -26,3 +25,8 @@ Tento súbor je zdroj pravdy pre číslovanie a stav promptov.
 | CP-0009 | 1.0.0   | Admin UI (Filament) pre Webhooks + Deliveries | ready  | prompts/codex/CP-0009-admin-ui-filament.md |
 | CP-0010 | 1.0.0   | Dev environment standardization (PHP 8.4+) + pre-flight checks | ready  | prompts/codex/CP-0010-dev-env-standardization.md |
 | CP-0011 | 1.0.0   | CI pipeline (GitHub Actions) pre Laravel (PHP 8.4+) | ready  | prompts/codex/CP-0011-ci-github-actions.md |
+| CP-0012 | 1.0.0   | Ops/Release minimum (health + system status) | ready  | prompts/codex/CP-0012-ops-release-minimum.md |
+| CP-0013 | 1.0.0   | API auth + RBAC + rate limiting + audit | ready  | prompts/codex/CP-0013-api-auth-rate-limit-audit.md |
+| CP-0014 | 1.0.0   | Multijazycnost (i18n) pre jadro aj moduly | ready  | prompts/codex/CP-0014-multilanguage-i18n.md |
+| CP-0015 | 1.0.0   | Automaticke aktualizacie jadra a modulov (MVP) | ready  | prompts/codex/CP-0015-auto-updates-core-modules.md |
+| CP-0016 | 1.0.0   | Control Plane Server MVP (registry + entitlements) | ready  | prompts/codex/CP-0016-control-plane-server-mvp.md |
