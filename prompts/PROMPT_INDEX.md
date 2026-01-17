@@ -25,3 +25,4 @@ Tento súbor je zdroj pravdy pre číslovanie a stav promptov.
 | CP-0008 | 1.0.0   | Outgoing Webhooks engine + n8n integrácia | ready  | prompts/codex/CP-0008-webhooks-n8n.md |
 | CP-0009 | 1.0.0   | Admin UI (Filament) pre Webhooks + Deliveries | ready  | prompts/codex/CP-0009-admin-ui-filament.md |
 | CP-0010 | 1.0.0   | Dev environment standardization (PHP 8.4+) + pre-flight checks | ready  | prompts/codex/CP-0010-dev-env-standardization.md |
+| CP-0011 | 1.0.0   | CI pipeline (GitHub Actions) pre Laravel (PHP 8.4+) | ready  | prompts/codex/CP-0011-ci-github-actions.md |
