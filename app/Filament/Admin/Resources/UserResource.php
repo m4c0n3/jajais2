@@ -5,6 +5,7 @@ namespace App\Filament\Admin\Resources;
 use App\Filament\Admin\Resources\UserResource\Pages\CreateUser;
 use App\Filament\Admin\Resources\UserResource\Pages\EditUser;
 use App\Filament\Admin\Resources\UserResource\Pages\ListUsers;
+use App\Filament\Admin\Resources\UserResource\Pages\ViewUser;
 use App\Models\User;
 use Filament\Forms\Components\MultiSelect;
 use Filament\Forms\Components\TextInput;
@@ -13,6 +14,8 @@ use Filament\Resources\Resource;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
 use Illuminate\Support\Facades\Hash;
 
 class UserResource extends Resource
@@ -50,6 +53,9 @@ class UserResource extends Resource
                 ->boolean()
                 ->getStateUsing(fn (User $record): bool => $record->hasRole('super-admin') || $record->can('admin.access')),
             TextColumn::make('created_at')->dateTime(),
+        ])->actions([
+            ViewAction::make(),
+            EditAction::make(),
         ]);
     }
 
@@ -59,6 +65,7 @@ class UserResource extends Resource
             'index' => ListUsers::route('/'),
             'create' => CreateUser::route('/create'),
             'edit' => EditUser::route('/{record}/edit'),
+            'view' => ViewUser::route('/{record}'),
         ];
     }
 

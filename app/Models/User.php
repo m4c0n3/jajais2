@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Exceptions\PermissionDoesNotExist;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements FilamentUser
@@ -53,17 +54,14 @@ class User extends Authenticatable implements FilamentUser
 
     public function canAccessPanel(Panel $panel): bool
     {
-        $allowed = $this->hasRole('super-admin') || $this->hasPermissionTo('admin.access');
+        $hasPermission = false;
 
-        if (!$allowed) {
-            logger()->warning('Admin panel access denied', [
-                'user_id' => $this->id,
-                'email' => $this->email,
-            ]);
-
-            abort(403, 'You do not have access to the admin panel. Ask an administrator to grant admin.access or super-admin.');
+        try {
+            $hasPermission = $this->hasPermissionTo('admin.access');
+        } catch (PermissionDoesNotExist) {
+            $hasPermission = false;
         }
 
-        return true;
+        return $this->hasRole('super-admin') || $hasPermission;
     }
 }
