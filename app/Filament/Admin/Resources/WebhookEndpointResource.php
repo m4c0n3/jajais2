@@ -9,6 +9,7 @@ use App\Jobs\SendWebhookDeliveryJob;
 use App\Models\WebhookDelivery;
 use App\Models\WebhookEndpoint;
 use App\Support\Audit\AuditService;
+use App\Support\Observability\RequestContext;
 use Carbon\CarbonImmutable;
 use Filament\Forms\Components\Actions\Action as FormAction;
 use Filament\Forms\Components\Grid;
@@ -91,7 +92,7 @@ class WebhookEndpointResource extends Resource
                             'correlation_id' => $payload['id'],
                         ]);
 
-                        SendWebhookDeliveryJob::dispatch($delivery->id);
+                        SendWebhookDeliveryJob::dispatch($delivery->id, RequestContext::currentRequestId());
                         self::logAudit('webhook.endpoint_tested', [
                             'target_type' => 'webhook_endpoint',
                             'target_id' => (string) $record->id,

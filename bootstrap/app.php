@@ -4,6 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use App\Http\Middleware\EnsureModuleActive;
+use App\Http\Middleware\RequestIdMiddleware;
 use App\Http\Middleware\SetUserLocale;
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -24,7 +25,9 @@ return Application::configure(basePath: dirname(__DIR__))
             'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
         ]);
 
+        $middleware->appendToGroup('web', RequestIdMiddleware::class);
         $middleware->appendToGroup('web', SetUserLocale::class);
+        $middleware->appendToGroup('api', RequestIdMiddleware::class);
         $middleware->appendToGroup('api', SetUserLocale::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

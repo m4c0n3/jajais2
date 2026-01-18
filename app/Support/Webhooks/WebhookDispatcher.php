@@ -5,6 +5,7 @@ namespace App\Support\Webhooks;
 use App\Jobs\SendWebhookDeliveryJob;
 use App\Models\WebhookDelivery;
 use App\Models\WebhookEndpoint;
+use App\Support\Observability\RequestContext;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Str;
 
@@ -41,7 +42,7 @@ class WebhookDispatcher
                 'correlation_id' => $payload['id'],
             ]);
 
-            SendWebhookDeliveryJob::dispatch($delivery->id);
+            SendWebhookDeliveryJob::dispatch($delivery->id, RequestContext::currentRequestId());
             $count++;
         }
 

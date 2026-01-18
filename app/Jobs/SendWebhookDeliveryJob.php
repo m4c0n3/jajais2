@@ -10,6 +10,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 use Throwable;
 
 class SendWebhookDeliveryJob implements ShouldQueue
@@ -19,12 +20,16 @@ class SendWebhookDeliveryJob implements ShouldQueue
     use Queueable;
     use SerializesModels;
 
-    public function __construct(public int $deliveryId)
+    public function __construct(public int $deliveryId, public ?string $requestId = null)
     {
     }
 
     public function handle(WebhookSender $sender): void
     {
+        if ($this->requestId) {
+            Log::withContext(['request_id' => $this->requestId]);
+        }
+
         $delivery = WebhookDelivery::with('endpoint')->find($this->deliveryId);
 
         if (!$delivery || !$delivery->endpoint || $delivery->status === 'delivered') {

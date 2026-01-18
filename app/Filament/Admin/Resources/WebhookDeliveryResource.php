@@ -7,6 +7,7 @@ use App\Filament\Admin\Resources\WebhookDeliveryResource\Pages\ViewWebhookDelive
 use App\Jobs\SendWebhookDeliveryJob;
 use App\Models\WebhookDelivery;
 use App\Support\Audit\AuditService;
+use App\Support\Observability\RequestContext;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
@@ -37,7 +38,7 @@ class WebhookDeliveryResource extends Resource
                     ->visible(fn () => auth()->user()?->hasRole('super-admin') || auth()->user()?->can('webhooks.replay'))
                     ->action(function (WebhookDelivery $record): void {
                         $record->update(['status' => 'pending']);
-                        SendWebhookDeliveryJob::dispatch($record->id);
+                        SendWebhookDeliveryJob::dispatch($record->id, RequestContext::currentRequestId());
                         self::logAudit('webhook.delivery_retried', [
                             'target_type' => 'webhook_delivery',
                             'target_id' => (string) $record->id,

@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Jobs\SendWebhookDeliveryJob;
 use App\Models\WebhookDelivery;
 use App\Models\WebhookEndpoint;
+use App\Support\Observability\RequestContext;
 use Carbon\CarbonImmutable;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
@@ -42,7 +43,7 @@ class WebhookTest extends Command
             'correlation_id' => $payload['id'],
         ]);
 
-        SendWebhookDeliveryJob::dispatch($delivery->id);
+        SendWebhookDeliveryJob::dispatch($delivery->id, RequestContext::currentRequestId());
 
         $this->info('Test delivery queued: '.$delivery->id);
 

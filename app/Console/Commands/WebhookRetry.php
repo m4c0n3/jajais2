@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Jobs\SendWebhookDeliveryJob;
 use App\Models\WebhookDelivery;
+use App\Support\Observability\RequestContext;
 use Carbon\CarbonImmutable;
 use Illuminate\Console\Command;
 
@@ -27,7 +28,7 @@ class WebhookRetry extends Command
             'next_attempt_at' => CarbonImmutable::now(),
         ]);
 
-        SendWebhookDeliveryJob::dispatch($delivery->id);
+        SendWebhookDeliveryJob::dispatch($delivery->id, RequestContext::currentRequestId());
 
         $this->info('Webhook delivery queued: '.$delivery->id);
 
