@@ -4,7 +4,9 @@ namespace Modules\ControlPlaneCore\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Modules\ControlPlaneCore\Console\Commands\ControlPlaneKeyList;
+use Modules\ControlPlaneCore\Console\Commands\ControlPlaneKeyRevoke;
 use Modules\ControlPlaneCore\Console\Commands\ControlPlaneKeyRotate;
+use Modules\ControlPlaneCore\Console\Commands\ControlPlaneInstanceRekey;
 
 class ControlPlaneCoreServiceProvider extends ServiceProvider
 {
@@ -22,6 +24,8 @@ class ControlPlaneCoreServiceProvider extends ServiceProvider
             $this->commands([
                 ControlPlaneKeyRotate::class,
                 ControlPlaneKeyList::class,
+                ControlPlaneKeyRevoke::class,
+                ControlPlaneInstanceRekey::class,
             ]);
         }
     }
